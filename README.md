@@ -145,6 +145,23 @@ if __name__ == "__main__":
     print(f"Generated SMILES saved to {output_file}")
     print(df)
 ```
+## How to Use Customized Valid Structure Assessor
+Here’s how to use `check_smiles.py` to validate a SMILES string:
+```python
+from check_smiles import check_smiles
+
+# Example SMILES
+smiles = "C1=CC=CC=C1"  # Benzene, a valid SMILES
+results = check_smiles(smiles)
+
+# Display results
+if results:
+    print("Issues detected:")
+    for penalty, explanation in results:
+        print(f"Penalty: {penalty} - {explanation}")
+else:
+    print("SMILES is valid.")
+```
 ## Citation
 If you use this model in your research, please cite our paper:
 ```
