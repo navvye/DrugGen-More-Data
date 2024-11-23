@@ -16,6 +16,8 @@ DrugGen is a GPT-2 based model specialized for generating drug-like SMILES struc
 ## How to Get Started with the Model
 Adjust the `num_generated` parameter to specify the number of unique protein SMILES you wish to generate.
 ```python
+from drugGen_generator import SMILESGenerator
+
 if __name__ == "__main__":
     
     # Initialize the generator
