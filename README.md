@@ -37,7 +37,7 @@ python3 drugGen_generator_cli.py --uniprot_ids P12821 P37231 --sequences "MGAASG
 ```
 #### Parameters
 -  uniprot_ids: Space-separated UniProt IDs.
--  sequences: Protein sequences in string format.
+-  sequences: Space-seperated protein sequences in string format.
 -  num_generated: Number of unique SMILES structures to generate.
 -  output_file: Name of the output file to save the generated structures.
 
