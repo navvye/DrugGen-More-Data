@@ -12,15 +12,20 @@ DrugGen is a GPT-2 based model specialized for generating drug-like SMILES struc
 -  Training Libraries: Hugging Face’s transformers and Transformer Reinforcement Learning (TRL)
 -  Model Sources: liyuesen/druggpt
 -  Training data: alimotahharynia/approved_drug_target
+-  [More details and pre-trained models on Hugging Face](https://huggingface.co/alimotahharynia/DrugGen)
 
 ## How to Get Started with the Model
 DrugGen can be used via command-line interface (CLI) or integration into Python scripts.
 
 ### Installation
-Clone the repository and navigate to its directory:
+#### Clone the repository and navigate to its directory
 ```bash
 git clone https://github.com/mahsasheikh/DrugGen.git
 cd DrugGen
+```
+#### Install dependencies
+```bash
+pip3 install -r requirements.txt
 ```
 
 ### Command-Line Interface
