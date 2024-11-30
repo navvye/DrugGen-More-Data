@@ -84,14 +84,14 @@ def load_training_data():
     """Load and prepare the binding affinity dataset."""
     logging.info("Loading binding affinity dataset...")
     try:
-        ds = load_dataset("jglaser/binding_affinity")
-        return ds['train']['smiles_can'], ds['train']['seq']
+        ds = load_dataset("jglaser/binding_affinity").sort("neg_log10_affinity_M", reverse=True)
+        return ds['train']['smiles_can'][0:10000], ds['train']['seq'][0:10000]
     except Exception as e:
         logging.error(f"Error loading binding affinity dataset: {e}")
         raise RuntimeError(f"Failed to load binding affinity dataset: {e}")
 
 def train_model(model, tokenizer, smiles_data, seq_data, 
-               batch_size=8, num_epochs=4, learning_rate=1e-4,
+               batch_size=8, num_epochs=1, learning_rate=1e-4,
                max_grad_norm=1.0, warmup_steps=0, weight_decay=0.01):
     """Train the model on the binding affinity dataset."""
     
@@ -105,7 +105,7 @@ def train_model(model, tokenizer, smiles_data, seq_data,
         dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=4  # Set to 4 for multiprocessing
+        num_workers=1
     )
     # Initialize optimizer
     optimizer = AdamW(
@@ -145,7 +145,7 @@ def train_model(model, tokenizer, smiles_data, seq_data,
             labels = batch['labels'].to(device)
             
             # Clear gradients
-            model.zero_grad()
+            optimizer.zero_grad()
             
             # Forward pass
             outputs = model(
@@ -230,7 +230,7 @@ class SMILESGenerator:
         """Generate unique SMILES with a retry limit to avoid infinite loops."""
         generated_smiles_set = set()
         prompt = f"<|startoftext|><P>{sequence}<L>"
-        encoded_prompt = self.tokenizer(prompt, return_tensors="pt")["input_ids"]
+        encoded_prompt = self.tokenizer(prompt, return_tensors="pt")["input_ids"].to(self.model.device)
         retries = 0
 
         logging.info(f"Generating SMILES for sequence: {sequence[:10]}...")
